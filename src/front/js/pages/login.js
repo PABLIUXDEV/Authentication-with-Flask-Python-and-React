@@ -20,14 +20,15 @@ export const Login = () => {
 				email: email,
 				password: password
 			})
-		}
-		fetch("https://3001-pabliuxdev-authenticati-h6zf9ebua16.ws-us116.gitpod.io/api/token", opts)
+		};
+		
+		fetch("https://3001-pabliuxdev-authenticati-11k9ibhbh64.ws-us116.gitpod.io/?vscodeBrowserReqId=1732435300594/api/token", {mode: 'no-cors'}, opts)
 			.then(resp => {
 				if (resp.status === 200) return resp.json();
 				else alert("There has been some error");
 			})
 			.then(data => {
-				console.log("this came from the backend", data)
+				console.log("this came from the backend", data);
 				sessionStorage.setItem("token", data.access_token);
 			})
 			.catch(error => {
