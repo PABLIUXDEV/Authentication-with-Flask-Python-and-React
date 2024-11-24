@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
+import { useNavigate } from "react-router-dom";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
 
@@ -7,41 +8,20 @@ export const Login = () => {
 	const { store, actions } = useContext(Context);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const token = sessionStorage.getItem("token");
-	console.log("This is your token", token)
+	const navigate = useNavigate();
+	
+	console.log("This is your token", store.token);
 	const handleClick = () => {
+		actions.login(email, password);
+		}; 
 
-		const opts = {
-			method: 'POST',
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify({
-				email: email,
-				password: password
-			})
-		};
-		
-		fetch("https://3001-pabliuxdev-authenticati-11k9ibhbh64.ws-us116.gitpod.io/?vscodeBrowserReqId=1732435300594/api/token", {mode: 'no-cors'}, opts)
-			.then(resp => {
-				if (resp.status === 200) return resp.json();
-				else alert("There has been some error");
-			})
-			.then(data => {
-				console.log("this came from the backend", data);
-				sessionStorage.setItem("token", data.access_token);
-			})
-			.catch(error => {
-				console.log("There was an error!!!!", error);
-			})
-
-	}
+	if (store.token && store.token != "" && store.token != undefined) navigate("/");
 
 	return (
 		<div className="text-center mt-5">
 			<h1>Login</h1>
-			{token && token != "" && token != undefined ? (
-				"You are logged in with this token" + token 
+			{store.token && store.token != "" && store.token != undefined ? (
+				"You are logged in with this token" + store.token 
 				) : (
 					<div>
 						<input type="text" placeholder="email" value={email} onChange={e => setEmail(e.target.value)}/>
