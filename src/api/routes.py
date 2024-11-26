@@ -13,6 +13,7 @@ from flask_jwt_extended import jwt_required
 # Create flask app
 api = Blueprint('api', __name__)
 
+CORS(api)
 
 
 # Create a route to authenticate your users and return JWTs. The

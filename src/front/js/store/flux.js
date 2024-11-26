@@ -48,14 +48,12 @@ const getState = ({ getStore, getActions, setStore }) => {
             password: password,
           }),
         };
-
         try {
           const resp = await fetch(`${process.env.BACKEND_URL}api/token`, opts);
           if (resp.status !== 200) {
             alert("There has been some error");
             return false;
           }
-
           const data = await resp.json();
           console.log("this came from the backend", data);
           sessionStorage.setItem("token", data.access_token);
