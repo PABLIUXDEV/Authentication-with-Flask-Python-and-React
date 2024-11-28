@@ -8,9 +8,14 @@ export const Navbar = () => {
 		<nav className="navbar navbar-light bg-light">
 			<div className="container">
 				<Link to="/">
-					<span className="navbar-brand mb-0 h1">React Boilerplate</span>
+					<span className="navbar-brand mb-0 h1">Home</span>
 				</Link>
-				<div className="ml-auto">
+				<div className="ml-auto d-flex">
+					<Link to="/signup">
+						<button className="btn btn-primary mx-2">Sign up</button>
+					</Link>
+
+					
 					{ !store.token ?
 
 					<Link to="/login">

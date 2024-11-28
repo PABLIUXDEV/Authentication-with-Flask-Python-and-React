@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
+import { Link } from "react-router-dom";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
 
@@ -16,17 +17,24 @@ export const Home = () => {
 
 	return (
 		<div className="text-center mt-5">
-			<h1>Hello Rigo!!</h1>
-			<p>
-				<img src={rigoImageUrl} />
+			<h1>PabliUX Web Space</h1>
+			{ !store.token ?
+
+			<p className="card">
+				Regístrate para comenzar
+				<Link to="/signup">
+				<button className="btn btn-warning">Registrarme</button>
+				</Link>
 			</p>
-			<div className="alert alert-info">{store.message}</div>
-			<p>
-				This boilerplate comes with lots of documentation:{" "}
-				<a href="https://start.4geeksacademy.com/starters/react-flask">
-					Read documentation
-				</a>
+			
+			:
+			
+			<p className="card bg-success text-white">
+			¡Felicidades, tu usuario está registrado!
 			</p>
+			
+			}
+
 		</div>
 	);
 };
