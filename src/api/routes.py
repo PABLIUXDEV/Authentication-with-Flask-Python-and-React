@@ -22,13 +22,35 @@ CORS(api)
 def create_token():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
-    if email != "test" or password != "test":
+    user_exist = User.query.filter_by(email=email).first()
+    if user_exist is None:
+        return jsonify({"msg": "User not found"}), 404
+    
+    if email != user_exist.email or password != user_exist.password:
         return jsonify({"msg": "Bad username or password"}), 401
 
     access_token = create_access_token(identity=email)
-    return jsonify(access_token=access_token)
+    return jsonify(access_token=access_token), 200
+
+@api.route("/signup", methods=["POST"])
+def signup():
+    email = request.json.get("email", None)
+    password = request.json.get("password", None)
+    user_exist = User.query.filter_by(email=email).first()
+    if user_exist:
+        return jsonify({"msg": "User found"}), 400
+    
+    new_user = User(
+        email = email,
+        password = password,
+        is_active = True
+    )
+    db.session.add(new_user)
+    db.session.commit()
+    return jsonify({"msg": "User was created"}), 201
 
 
+    
 @api.route("/hello", methods=["GET"])
 @jwt_required()
 def get_hello():

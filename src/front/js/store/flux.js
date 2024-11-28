@@ -64,6 +64,24 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
+      signup: async (data) => {
+        const opts = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        };
+        try {
+          const resp = await fetch(`${process.env.BACKEND_URL}api/signup`, opts);
+          console.log(resp)
+          return true
+        } catch (error) {
+          console.log(error)
+          return false
+        }
+      },
+
       getMessage: () => {
         const store = getStore();
         const opts = {
